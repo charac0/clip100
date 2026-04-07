@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="120" fill="#0A0A0A" rx="8"/>
+
+  <!-- Red accent bar left -->
+  <rect x="24" y="24" width="4" height="72" fill="#E8341A" rx="2"/>
+
+  <!-- CLIP text -->
+  <text
+    x="42"
+    y="90"
+    font-family="'Bebas Neue', 'Arial Black', sans-serif"
+    font-size="80"
+    font-weight="400"
+    fill="#F5F3EE"
+    letter-spacing="4"
+  >CLIP</text>
+
+  <!-- 100 text in red -->
+  <text
+    x="226"
+    y="90"
+    font-family="'Bebas Neue', 'Arial Black', sans-serif"
+    font-size="80"
+    font-weight="400"
+    fill="#E8341A"
+    letter-spacing="4"
+  >100</text>
+
+  <!-- Eyebrow text -->
+  <text
+    x="42"
+    y="18"
+    font-family="'Barlow Condensed', 'Arial Narrow', sans-serif"
+    font-size="10"
+    font-weight="600"
+    fill="#555555"
+    letter-spacing="3"
+  >THE OFFICIAL STREAMING CHARTS</text>
+
+  <!-- Bottom tagline -->
+  <text
+    x="42"
+    y="112"
+    font-family="'Barlow Condensed', 'Arial Narrow', sans-serif"
+    font-size="9"
+    font-weight="600"
+    fill="#333333"
+    letter-spacing="2"
+  >TWITCH · YOUTUBE · KICK</text>
+</svg>

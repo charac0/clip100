@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — CLIP100</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E8341A;
+    --black: #0A0A0A;
+    --white: #F5F3EE;
+    --gray-1: #1A1A1A;
+    --gray-2: #242424;
+    --gray-3: #333333;
+    --gray-4: #555555;
+    --gray-5: #888888;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .bg-number {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(200px, 40vw, 400px);
+    color: var(--gray-1);
+    letter-spacing: -10px;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    z-index: 0;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-16px); }
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--red); }
+
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: var(--gray-3);
+    border-radius: 2px;
+  }
+
+  .headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 72px);
+    letter-spacing: 3px;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .headline span { color: var(--red); }
+
+  .sub {
+    font-size: 15px;
+    color: var(--gray-5);
+    max-width: 360px;
+    line-height: 1.6;
+  }
+
+  .back-btn {
+    margin-top: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    border: none;
+    padding: 12px 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-block;
+  }
+
+  .back-btn:hover { background: #C8280F; }
+  .back-btn:active { transform: scale(0.97); }
+
+  .rank-note {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-4);
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-number">404</div>
+  <div class="content">
+    <a href="/" class="logo">CLIP<span>100</span></a>
+    <div class="divider"></div>
+    <div class="eyebrow">Error 404</div>
+    <div class="headline">This clip<br>didn't make<br>the <span>chart.</span></div>
+    <p class="sub">The page you're looking for doesn't exist. Maybe it got ratio'd into oblivion.</p>
+    <a href="/" class="back-btn">Back to the Charts</a>
+    <div class="rank-note">clip100.site — the official streaming charts</div>
+  </div>
+</body>
+</html>
