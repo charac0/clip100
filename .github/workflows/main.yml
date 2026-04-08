@@ -1,0 +1,37 @@
+name: Daily Clip Update
+on:
+  schedule:
+    - cron: '0 0 * * *' # This runs it every night at midnight UTC
+  workflow_dispatch: # This adds a "Run Now" button for testing
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allows GitHub to save the new data.json to your repo
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests google-api-python-client
+
+      - name: Run Scraper
+        run: python CLIP100.py
+        env:
+          TWITCH_ID: ${{ secrets.TWITCH_ID }}
+          TWITCH_SECRET: ${{ secrets.TWITCH_SECRET }}
+          YT_KEY: ${{ secrets.YT_KEY }}
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add data.json
+          git commit -m "Auto-update clips" || exit 0
+          git push
