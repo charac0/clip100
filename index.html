@@ -7,609 +7,102 @@
 <meta name="description" content="The Billboard 100 of streaming. Top 100 viral clips and streams ranked daily across Twitch, YouTube, and Kick.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --red: #E8341A;
-    --red-dark: #B5260F;
-    --black: #0A0A0A;
-    --white: #F5F3EE;
-    --gray-1: #1A1A1A;
-    --gray-2: #242424;
-    --gray-3: #333333;
-    --gray-4: #555555;
-    --gray-5: #888888;
-    --gray-6: #AAAAAA;
-    --twitch: #9147FF;
-    --youtube: #FF0000;
-    --kick: #53FC18;
-    --gold: #D4A017;
-    --silver: #9E9E9E;
-    --bronze: #CD7F32;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: 'Barlow', sans-serif;
-    font-size: 15px;
-    line-height: 1.5;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* NOISE TEXTURE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
-
-  /* NAV */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--gray-3);
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
-  }
-
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 3px;
-    color: var(--white);
-    text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--red); }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .nav-link {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-5);
-    text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    transition: color 0.2s, background 0.2s;
-    cursor: pointer;
-    background: none;
-    border: none;
-  }
-
-  .nav-link:hover, .nav-link.active {
-    color: var(--white);
-    background: var(--gray-2);
-  }
-
-  .nav-live {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--red);
-  }
-
-  .live-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--red);
-    animation: livepulse 1.8s ease-in-out infinite;
-  }
-
-  @keyframes livepulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-  }
-
-  /* HERO */
-  .hero {
-    position: relative;
-    padding: 48px 24px 36px;
-    border-bottom: 1px solid var(--gray-3);
-    overflow: hidden;
-  }
-
-  .hero-bg-text {
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 220px;
-    color: var(--gray-1);
-    letter-spacing: -10px;
-    pointer-events: none;
-    user-select: none;
-    line-height: 1;
-    z-index: 0;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .hero-left {}
-
-  .hero-eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 8px;
-  }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(64px, 10vw, 120px);
-    letter-spacing: 4px;
-    line-height: 0.9;
-    color: var(--white);
-  }
-
-  .hero-title span { color: var(--red); }
-
-  .hero-sub {
-    margin-top: 16px;
-    font-size: 14px;
-    color: var(--gray-5);
-    max-width: 400px;
-    line-height: 1.6;
-  }
-
-  .hero-right {
-    text-align: right;
-  }
-
-  .hero-date {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-5);
-    margin-bottom: 4px;
-  }
-
-  .hero-week {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    letter-spacing: 2px;
-    color: var(--white);
-  }
-
-  .platform-pills {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-    justify-content: flex-end;
-  }
-
-  .platform-pill {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 3px;
-  }
-
-  .pill-twitch { background: rgba(145,71,255,0.15); color: #B794FF; border: 1px solid rgba(145,71,255,0.3); }
-  .pill-youtube { background: rgba(255,0,0,0.12); color: #FF6B6B; border: 1px solid rgba(255,0,0,0.25); }
-  .pill-kick { background: rgba(83,252,24,0.1); color: #7EFF5A; border: 1px solid rgba(83,252,24,0.25); }
-
-  /* MAIN LAYOUT */
-  .main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px 80px;
-  }
-
-  /* CHART TABS + CONTROLS */
-  .chart-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 20px 0 16px;
-    border-bottom: 1px solid var(--gray-3);
-    margin-bottom: 0;
-  }
-
-  .tabs {
-    display: flex;
-    gap: 4px;
-  }
-
-  .tab-btn {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 7px 16px;
-    border-radius: 4px;
-    border: 1px solid var(--gray-3);
-    background: transparent;
-    color: var(--gray-5);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .tab-btn:hover { color: var(--white); border-color: var(--gray-4); }
-  .tab-btn.active { background: var(--red); color: var(--white); border-color: var(--red); }
-
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .ctrl-select {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    background: var(--gray-2);
-    color: var(--white);
-    border: 1px solid var(--gray-3);
-    border-radius: 4px;
-    padding: 7px 10px;
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .ctrl-select:hover, .ctrl-select:focus { border-color: var(--gray-4); }
-
-  .ctrl-search {
-    font-family: 'Barlow', sans-serif;
-    font-size: 13px;
-    background: var(--gray-2);
-    color: var(--white);
-    border: 1px solid var(--gray-3);
-    border-radius: 4px;
-    padding: 7px 12px;
-    outline: none;
-    width: 200px;
-    transition: border-color 0.2s;
-  }
-
-  .ctrl-search::placeholder { color: var(--gray-4); }
-  .ctrl-search:focus { border-color: var(--red); }
-
-  .count-badge {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--gray-5);
-    padding: 0 4px;
-  }
-
-  /* TABLE */
-  .table-head {
-    display: grid;
-    grid-template-columns: 60px 1fr 100px 90px 70px;
-    padding: 10px 16px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-4);
-    border-bottom: 1px solid var(--gray-2);
-    gap: 12px;
-  }
-
-  .rows-wrap {}
-
-  .clip-row {
-    display: grid;
-    grid-template-columns: 60px 1fr 100px 90px 70px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--gray-2);
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: background 0.15s;
-    animation: rowIn 0.3s ease both;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  @keyframes rowIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .clip-row:hover { background: var(--gray-1); }
-
-  .clip-row.rank-1 { border-left: 3px solid var(--gold); }
-  .clip-row.rank-2 { border-left: 3px solid var(--silver); }
-  .clip-row.rank-3 { border-left: 3px solid var(--bronze); }
-
-  /* RANK CELL */
-  .rank-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-  }
-
-  .rank-number {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    line-height: 1;
-    color: var(--white);
-  }
-
-  .rank-1 .rank-number { color: var(--gold); }
-  .rank-2 .rank-number { color: var(--silver); }
-  .rank-3 .rank-number { color: var(--bronze); }
-
-  .rank-delta {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-
-  .delta-up { color: #4CAF50; }
-  .delta-dn { color: #EF5350; }
-  .delta-new { color: #42A5F5; }
-  .delta-eq { color: var(--gray-4); }
-
-  /* INFO CELL */
-  .info-cell {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .clip-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--white);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.3;
-  }
-
-  .clip-meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .streamer {
-    font-size: 12px;
-    color: var(--gray-5);
-    font-weight: 500;
-  }
-
-  .plat-badge {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
-
-  .plat-twitch { background: rgba(145,71,255,0.2); color: #C4ADFF; }
-  .plat-youtube { background: rgba(255,0,0,0.15); color: #FF8A8A; }
-  .plat-kick { background: rgba(83,252,24,0.12); color: #7EFF5A; }
-
-  .cat-badge {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--gray-4);
-    border: 1px solid var(--gray-3);
-    padding: 1px 5px;
-    border-radius: 3px;
-  }
-
-  /* VIEWS CELL */
-  .views-cell {
-    text-align: right;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--white);
-    letter-spacing: 0.5px;
-  }
-
-  .peak-cell {
-    text-align: right;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px;
-    color: var(--gray-5);
-    letter-spacing: 0.5px;
-  }
-
-  /* VELOCITY BAR */
-  .velocity-cell {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .vel-bar-bg {
-    height: 3px;
-    background: var(--gray-2);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .vel-bar-fill {
-    height: 100%;
-    background: var(--red);
-    border-radius: 2px;
-    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .vel-pct {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px;
-    color: var(--gray-4);
-    letter-spacing: 0.5px;
-    text-align: right;
-  }
-
-  /* LOAD MORE */
-  .load-more-wrap {
-    padding: 24px 0;
-    display: flex;
-    justify-content: center;
-  }
-
-  .load-more-btn {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    background: transparent;
-    color: var(--gray-5);
-    border: 1px solid var(--gray-3);
-    padding: 10px 32px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .load-more-btn:hover { color: var(--white); border-color: var(--gray-5); background: var(--gray-2); }
-
-  /* EMPTY STATE */
-  .empty-state {
-    padding: 60px 0;
-    text-align: center;
-  }
-
-  .empty-state p {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-4);
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--gray-2);
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .footer-brand {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 3px;
-    color: var(--gray-4);
-  }
-
-  .footer-brand span { color: var(--red); }
-
-  .footer-note {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--gray-4);
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    .table-head { grid-template-columns: 50px 1fr 80px; }
-    .table-head .th-peak, .table-head .th-vel { display: none; }
-    .clip-row { grid-template-columns: 50px 1fr 80px; }
-    .peak-cell, .velocity-cell { display: none; }
-    .hero-bg-text { font-size: 120px; }
-    .ctrl-search { width: 140px; }
-    nav { padding: 0 16px; }
-    .main { padding: 0 16px 60px; }
-    .hero { padding: 32px 16px 24px; }
-  }
-
-  @media (max-width: 480px) {
-    .table-head { grid-template-columns: 44px 1fr 72px; }
-    .clip-row { grid-template-columns: 44px 1fr 72px; }
-    .controls { gap: 6px; }
-    .ctrl-search { width: 120px; }
-  }
+  :root{--red:#E8341A;--black:#0A0A0A;--white:#F5F3EE;--gray-1:#1A1A1A;--gray-2:#242424;--gray-3:#333333;--gray-4:#555555;--gray-5:#888888;--gold:#D4A017;--silver:#9E9E9E;--bronze:#CD7F32;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.5;min-height:100vh;overflow-x:hidden;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-3);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;}
+  .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--white);text-decoration:none;}
+  .nav-logo span{color:var(--red);}
+  .nav-links{display:flex;align-items:center;gap:6px;}
+  .nav-link{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-5);text-decoration:none;padding:6px 12px;border-radius:4px;transition:color 0.2s,background 0.2s;cursor:pointer;background:none;border:none;}
+  .nav-link:hover,.nav-link.active{color:var(--white);background:var(--gray-2);}
+  .nav-live{display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--red);}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:livepulse 1.8s ease-in-out infinite;}
+  @keyframes livepulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.8);}}
+  .hero{position:relative;padding:48px 24px 36px;border-bottom:1px solid var(--gray-3);overflow:hidden;}
+  .hero-bg-text{position:absolute;top:-20px;right:-20px;font-family:'Bebas Neue',sans-serif;font-size:220px;color:var(--gray-1);letter-spacing:-10px;pointer-events:none;user-select:none;line-height:1;z-index:0;}
+  .hero-content{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+  .hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,10vw,120px);letter-spacing:4px;line-height:0.9;}
+  .hero-title span{color:var(--red);}
+  .hero-sub{margin-top:16px;font-size:14px;color:var(--gray-5);max-width:400px;line-height:1.6;}
+  .hero-right{text-align:right;}
+  .hero-date{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-5);margin-bottom:4px;}
+  .hero-week{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;}
+  .platform-pills{display:flex;gap:8px;margin-top:8px;justify-content:flex-end;}
+  .platform-pill{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+  .pill-twitch{background:rgba(145,71,255,0.15);color:#B794FF;border:1px solid rgba(145,71,255,0.3);}
+  .pill-youtube{background:rgba(255,0,0,0.12);color:#FF6B6B;border:1px solid rgba(255,0,0,0.25);}
+  .pill-kick{background:rgba(83,252,24,0.1);color:#7EFF5A;border:1px solid rgba(83,252,24,0.25);}
+  .main{max-width:1200px;margin:0 auto;padding:0 24px 80px;}
+  .chart-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:20px 0 16px;border-bottom:1px solid var(--gray-3);}
+  .tabs{display:flex;gap:4px;}
+  .tab-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:7px 16px;border-radius:4px;border:1px solid var(--gray-3);background:transparent;color:var(--gray-5);cursor:pointer;transition:all 0.2s;}
+  .tab-btn:hover{color:var(--white);border-color:var(--gray-4);}
+  .tab-btn.active{background:var(--red);color:var(--white);border-color:var(--red);}
+  .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .ctrl-select{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;background:var(--gray-2);color:var(--white);border:1px solid var(--gray-3);border-radius:4px;padding:7px 10px;cursor:pointer;outline:none;}
+  .ctrl-search{font-family:'Barlow',sans-serif;font-size:13px;background:var(--gray-2);color:var(--white);border:1px solid var(--gray-3);border-radius:4px;padding:7px 12px;outline:none;width:200px;}
+  .ctrl-search::placeholder{color:var(--gray-4);}
+  .ctrl-search:focus{border-color:var(--red);}
+  .count-badge{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-5);}
+  .table-head{display:grid;grid-template-columns:60px 1fr 100px 90px 70px;padding:10px 16px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-4);border-bottom:1px solid var(--gray-2);gap:12px;}
+  .clip-row{display:grid;grid-template-columns:60px 1fr 100px 90px 70px;padding:12px 16px;border-bottom:1px solid var(--gray-2);align-items:center;gap:12px;cursor:pointer;transition:background 0.15s;animation:rowIn 0.3s ease both;text-decoration:none;color:inherit;}
+  @keyframes rowIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .clip-row:hover{background:var(--gray-1);}
+  .clip-row.rank-1{border-left:3px solid var(--gold);}
+  .clip-row.rank-2{border-left:3px solid var(--silver);}
+  .clip-row.rank-3{border-left:3px solid var(--bronze);}
+  .rank-cell{display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .rank-number{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;}
+  .rank-1 .rank-number{color:var(--gold);}
+  .rank-2 .rank-number{color:var(--silver);}
+  .rank-3 .rank-number{color:var(--bronze);}
+  .rank-delta{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;}
+  .delta-up{color:#4CAF50;}.delta-dn{color:#EF5350;}.delta-new{color:#42A5F5;}.delta-eq{color:var(--gray-4);}
+  .info-cell{min-width:0;display:flex;flex-direction:column;gap:5px;}
+  .clip-title{font-size:14px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+  .clip-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .streamer{font-size:12px;color:var(--gray-5);font-weight:500;}
+  .plat-badge{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 6px;border-radius:3px;}
+  .plat-twitch{background:rgba(145,71,255,0.2);color:#C4ADFF;}
+  .plat-youtube{background:rgba(255,0,0,0.15);color:#FF8A8A;}
+  .plat-kick{background:rgba(83,252,24,0.12);color:#7EFF5A;}
+  .cat-badge{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gray-4);border:1px solid var(--gray-3);padding:1px 5px;border-radius:3px;}
+  .views-cell{text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;letter-spacing:0.5px;}
+  .peak-cell{text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--gray-5);letter-spacing:0.5px;}
+  .velocity-cell{display:flex;flex-direction:column;gap:4px;}
+  .vel-bar-bg{height:3px;background:var(--gray-2);border-radius:2px;overflow:hidden;}
+  .vel-bar-fill{height:100%;background:var(--red);border-radius:2px;}
+  .vel-pct{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--gray-4);text-align:right;}
+  .load-more-wrap{padding:24px 0;display:flex;justify-content:center;}
+  .load-more-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;background:transparent;color:var(--gray-5);border:1px solid var(--gray-3);padding:10px 32px;border-radius:4px;cursor:pointer;transition:all 0.2s;}
+  .load-more-btn:hover{color:var(--white);border-color:var(--gray-5);background:var(--gray-2);}
+  .empty-state{padding:60px 0;text-align:center;}
+  .empty-state p{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-4);}
+  .loading-state{padding:60px 0;text-align:center;}
+  .loading-state p{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-4);animation:blink 1.4s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  footer{border-top:1px solid var(--gray-2);padding:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto;}
+  .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gray-4);}
+  .footer-brand span{color:var(--red);}
+  .footer-note{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-4);}
+  @media(max-width:768px){.table-head{grid-template-columns:50px 1fr 80px;}.table-head .th-peak,.table-head .th-vel{display:none;}.clip-row{grid-template-columns:50px 1fr 80px;}.peak-cell,.velocity-cell{display:none;}.hero-bg-text{font-size:120px;}.ctrl-search{width:140px;}nav{padding:0 16px;}.main{padding:0 16px 60px;}.hero{padding:32px 16px 24px;}}
+  @media(max-width:480px){.table-head{grid-template-columns:44px 1fr 72px;}.clip-row{grid-template-columns:44px 1fr 72px;}.ctrl-search{width:120px;}}
 </style>
 </head>
 <body>
-
-<!-- NAV -->
 <nav>
-  <a class="nav-logo" href="/">CLIP<span>100</span></a>
+  <a class="nav-logo" href="#">CLIP<span>100</span></a>
   <div class="nav-links">
     <button class="nav-link active" onclick="switchTab('clips',this)">Clips</button>
     <button class="nav-link" onclick="switchTab('streams',this)">Streams</button>
     <div class="nav-live"><span class="live-dot"></span>Live</div>
   </div>
 </nav>
-
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-text">100</div>
   <div class="hero-content">
@@ -629,8 +122,6 @@
     </div>
   </div>
 </section>
-
-<!-- MAIN CHART -->
 <div class="main">
   <div class="chart-header">
     <div class="tabs">
@@ -653,7 +144,6 @@
       <span class="count-badge" id="count-badge">— entries</span>
     </div>
   </div>
-
   <div class="table-head">
     <div>Rank</div>
     <div>Clip</div>
@@ -661,80 +151,122 @@
     <div class="th-peak" style="text-align:right;">Peak</div>
     <div class="th-vel">Velocity</div>
   </div>
-
-  <div class="rows-wrap" id="rows-wrap"></div>
-
+  <div id="rows-wrap"><div class="loading-state"><p>Loading charts...</p></div></div>
   <div class="load-more-wrap">
-    <button class="load-more-btn" id="load-more-btn" onclick="showMore()">Show More</button>
+    <button class="load-more-btn" id="load-more-btn" onclick="showMore()" style="display:none;">Show More</button>
   </div>
 </div>
-
 <footer>
   <div class="footer-brand">CLIP<span>100</span></div>
   <div class="footer-note">Rankings by view velocity &bull; Updated daily &bull; Twitch &bull; YouTube &bull; Kick</div>
 </footer>
-
-let allData = [];
-let filtered = [];
-let shown = 20;
-
-// THIS PART FETCHES THE REAL DATA
-async function loadRealData() {
-    try {
-        const response = await fetch('data.json');
-        const data = await response.json();
-        
-        // Update the date on the hero section
-        document.getElementById('hero-week-date').textContent = data.last_updated;
-        
-        // Set the clips
-        allData = data.clips;
-        filtered = [...allData];
-        render();
-    } catch (e) {
-        console.error("Could not load data.json", e);
-    }
+<script>
+var FALLBACK_CLIPS=[
+  {rank:1,prev:2,title:"KAI BREAKS ALL-TIME SUBATHON RECORD",streamer:"KaiCenat",platform:"Twitch",category:"Just Chatting",views:1240000,peak:280000,url:"#"},
+  {rank:2,prev:1,title:"SPEED CRASHES IRL STREAM IN TOKYO",streamer:"IShowSpeed",platform:"YouTube",category:"IRL",views:980000,peak:210000,url:"#"},
+  {rank:3,prev:5,title:"CaseOh destroys entire house on stream",streamer:"CaseOh",platform:"Twitch",category:"Gaming",views:870000,peak:195000,url:"#"},
+  {rank:4,prev:3,title:"xQc rage quits ranked for the 4th time",streamer:"xQc",platform:"Kick",category:"Gaming",views:740000,peak:160000,url:"#"},
+  {rank:5,prev:8,title:"NINJA RETURNS TO TWITCH AFTER 2 YEARS",streamer:"Ninja",platform:"Twitch",category:"Gaming",views:680000,peak:145000,url:"#"},
+  {rank:6,prev:4,title:"Adin Ross meets Drake live on stream",streamer:"AdinRoss",platform:"Kick",category:"Just Chatting",views:620000,peak:138000,url:"#"},
+  {rank:7,prev:null,title:"shroud hits 1M concurrent viewers",streamer:"shroud",platform:"Twitch",category:"Gaming",views:590000,peak:130000,url:"#"},
+  {rank:8,prev:9,title:"Valkyrae emotional breakdown moment",streamer:"Valkyrae",platform:"YouTube",category:"Just Chatting",views:540000,peak:118000,url:"#"},
+  {rank:9,prev:7,title:"pokimane announces final stream",streamer:"pokimane",platform:"Twitch",category:"Just Chatting",views:510000,peak:112000,url:"#"},
+  {rank:10,prev:12,title:"MrBeast surprise joins Kai mid-stream",streamer:"KaiCenat",platform:"Twitch",category:"Just Chatting",views:490000,peak:108000,url:"#"},
+  {rank:11,prev:10,title:"HasanAbi sets political debate viewership record",streamer:"HasanAbi",platform:"Twitch",category:"Just Chatting",views:460000,peak:99000,url:"#"},
+  {rank:12,prev:14,title:"TimTheTatman Battlefield 6 world first",streamer:"timthetatman",platform:"Twitch",category:"Gaming",views:430000,peak:92000,url:"#"},
+  {rank:13,prev:null,title:"Jynxzi hits global rank 1 on Rainbow Six",streamer:"Jynxzi",platform:"Twitch",category:"Gaming",views:410000,peak:90000,url:"#"},
+  {rank:14,prev:15,title:"Destiny vs Sneako debate gets out of hand",streamer:"Destiny",platform:"Kick",category:"Just Chatting",views:390000,peak:85000,url:"#"},
+  {rank:15,prev:11,title:"loltyler1 goes on 3 hour unhinged rant",streamer:"loltyler1",platform:"Twitch",category:"Gaming",views:370000,peak:82000,url:"#"},
+  {rank:16,prev:17,title:"Ibai boxing stream breaks platform record",streamer:"Ibai",platform:"Twitch",category:"IRL",views:355000,peak:78000,url:"#"},
+  {rank:17,prev:18,title:"moistcr1tikal exposes fake charity streamer",streamer:"moistcr1tikal",platform:"Twitch",category:"Just Chatting",views:340000,peak:76000,url:"#"},
+  {rank:18,prev:16,title:"QTCinderella Master Baker chaos moment",streamer:"QTCinderella",platform:"Twitch",category:"IRL",views:325000,peak:71000,url:"#"},
+  {rank:19,prev:null,title:"NickEh30 insane 1v5 clutch in Fortnite",streamer:"NickEh30",platform:"YouTube",category:"Gaming",views:310000,peak:68000,url:"#"},
+  {rank:20,prev:22,title:"Ludwig chess match goes totally off the rails",streamer:"ludwig",platform:"YouTube",category:"Just Chatting",views:298000,peak:65000,url:"#"}
+];
+var FALLBACK_STREAMS=[
+  {rank:1,prev:1,title:"KaiCenat 30-day Subathon marathon",streamer:"KaiCenat",platform:"Twitch",category:"Just Chatting",views:4200000,peak:485000,url:"#"},
+  {rank:2,prev:3,title:"IShowSpeed World Tour IRL stream",streamer:"IShowSpeed",platform:"YouTube",category:"IRL",views:3800000,peak:420000,url:"#"},
+  {rank:3,prev:2,title:"xQc 18-hour variety marathon",streamer:"xQc",platform:"Kick",category:"Gaming",views:3200000,peak:360000,url:"#"},
+  {rank:4,prev:5,title:"Ibai La Velada boxing event",streamer:"Ibai",platform:"Twitch",category:"IRL",views:2900000,peak:3800000,url:"#"},
+  {rank:5,prev:4,title:"shroud full Valorant ranked grind",streamer:"shroud",platform:"Twitch",category:"Gaming",views:2600000,peak:290000,url:"#"},
+  {rank:6,prev:7,title:"HasanAbi 12-hour political marathon",streamer:"HasanAbi",platform:"Twitch",category:"Just Chatting",views:2400000,peak:265000,url:"#"},
+  {rank:7,prev:null,title:"TimTheTatman Battlefield 6 launch stream",streamer:"timthetatman",platform:"Twitch",category:"Gaming",views:2200000,peak:240000,url:"#"},
+  {rank:8,prev:9,title:"Ninja comeback 24-hour stream",streamer:"Ninja",platform:"Twitch",category:"Gaming",views:2050000,peak:225000,url:"#"},
+  {rank:9,prev:8,title:"Valkyrae new game reveal reaction",streamer:"Valkyrae",platform:"YouTube",category:"Gaming",views:1900000,peak:210000,url:"#"},
+  {rank:10,prev:11,title:"Jynxzi ranked grind to champion",streamer:"Jynxzi",platform:"Twitch",category:"Gaming",views:1750000,peak:195000,url:"#"}
+];
+var allClips=[],allStreams=[],allData=[],filtered=[],shown=20,currentTab='clips';
+async function init(){
+  var now=new Date();
+  document.getElementById('hero-week-date').textContent=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  try{
+    var response=await fetch('data.json');
+    if(!response.ok)throw new Error('no data.json');
+    var data=await response.json();
+    allClips=data.clips||[];
+    allStreams=data.streams||[];
+    if(data.last_updated)document.getElementById('hero-week-date').textContent=data.last_updated;
+  }catch(e){
+    allClips=FALLBACK_CLIPS;
+    allStreams=FALLBACK_STREAMS;
+  }
+  allData=allClips;
+  filtered=allData.slice();
+  render();
 }
-
-function fmt(n) {
-    if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
-    if (n >= 1e3) return Math.round(n / 1e3) + 'K';
-    return String(n);
+function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return String(n);}
+function getDelta(c){if(!c.prev)return{txt:'NEW',cls:'delta-new'};var d=c.prev-c.rank;if(d>0)return{txt:'▲'+d,cls:'delta-up'};if(d<0)return{txt:'▼'+Math.abs(d),cls:'delta-dn'};return{txt:'—',cls:'delta-eq'};}
+function buildRow(c,maxV,delay){
+  var delta=getDelta(c);
+  var pct=Math.round((c.views/maxV)*100);
+  var rankClass=c.rank<=3?' rank-'+c.rank:'';
+  var platClass='plat-'+c.platform.toLowerCase();
+  var href=c.url&&c.url!=='#'?c.url:'javascript:void(0)';
+  var target=c.url&&c.url!=='#'?'target="_blank" rel="noopener"':'';
+  return '<a class="clip-row'+rankClass+'" href="'+href+'" '+target+' style="animation-delay:'+delay+'ms">'+
+    '<div class="rank-cell"><span class="rank-number">'+c.rank+'</span><span class="rank-delta '+delta.cls+'">'+delta.txt+'</span></div>'+
+    '<div class="info-cell"><span class="clip-title">'+c.title+'</span>'+
+    '<div class="clip-meta"><span class="streamer">'+c.streamer+'</span>'+
+    '<span class="plat-badge '+platClass+'">'+c.platform+'</span>'+
+    '<span class="cat-badge">'+(c.category||'')+'</span></div></div>'+
+    '<div class="views-cell">'+fmt(c.views)+'</div>'+
+    '<div class="peak-cell">'+fmt(c.peak||0)+'</div>'+
+    '<div class="velocity-cell"><div class="vel-bar-bg"><div class="vel-bar-fill" style="width:'+pct+'%"></div></div>'+
+    '<div class="vel-pct">'+pct+'%</div></div></a>';
 }
-
-function buildRow(c, maxV, delay) {
-    const pct = Math.round((c.views / maxV) * 100);
-    const rankClass = c.rank <= 3 ? ` rank-${c.rank}` : '';
-    
-    // This makes the row clickable to the actual video URL
-    return `<a class="clip-row${rankClass}" href="${c.url}" target="_blank" rel="noopener" style="animation-delay:${delay}ms">
-        <div class="rank-cell">
-            <span class="rank-number">${c.rank}</span>
-            <span class="rank-delta delta-new">NEW</span>
-        </div>
-        <div class="info-cell">
-            <span class="clip-title">${c.title}</span>
-            <div class="clip-meta">
-                <span class="streamer">${c.streamer}</span>
-                <span class="plat-badge plat-${c.platform.toLowerCase()}">${c.platform}</span>
-            </div>
-        </div>
-        <div class="views-cell">${fmt(c.views)}</div>
-        <div class="velocity-cell">
-            <div class="vel-bar-bg"><div class="vel-bar-fill" style="width:${pct}%"></div></div>
-            <div class="vel-pct">${pct}%</div>
-        </div>
-    </a>`;
+function render(){
+  var wrap=document.getElementById('rows-wrap');
+  var btn=document.getElementById('load-more-btn');
+  var badge=document.getElementById('count-badge');
+  if(!filtered.length){wrap.innerHTML='<div class="empty-state"><p>No results found</p></div>';btn.style.display='none';badge.textContent='0 entries';return;}
+  var maxV=filtered[0].views;
+  wrap.innerHTML=filtered.slice(0,shown).map(function(c,i){return buildRow(c,maxV,i*30);}).join('');
+  btn.style.display=shown<filtered.length?'flex':'none';
+  badge.textContent=filtered.length+' entries';
 }
-
-function render() {
-    const wrap = document.getElementById('rows-wrap');
-    if (!filtered.length) return;
-    const maxV = filtered[0].views;
-    wrap.innerHTML = filtered.slice(0, shown).map((c, i) => buildRow(c, maxV, i * 30)).join('');
+function applyFilters(){
+  var plat=document.getElementById('sel-platform').value;
+  var q=document.getElementById('search-input').value.toLowerCase().trim();
+  filtered=allData.filter(function(c){
+    if(plat!=='all'&&c.platform!==plat)return false;
+    if(q&&!c.streamer.toLowerCase().includes(q)&&!c.title.toLowerCase().includes(q))return false;
+    return true;
+  });
+  shown=20;render();
 }
-
-// Start the loading process
-loadRealData();
+function showMore(){shown+=20;render();}
+function switchTab(tab,btn){
+  currentTab=tab;
+  document.querySelectorAll('.tab-btn,.nav-link').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  allData=tab==='clips'?allClips:allStreams;
+  filtered=allData.slice();shown=20;
+  document.getElementById('sel-platform').value='all';
+  document.getElementById('search-input').value='';
+  render();
+}
+init();
+</script>
 </body>
 </html>
