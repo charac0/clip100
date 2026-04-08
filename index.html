@@ -674,163 +674,67 @@
   <div class="footer-note">Rankings by view velocity &bull; Updated daily &bull; Twitch &bull; YouTube &bull; Kick</div>
 </footer>
 
-<script>
-const CLIPS = [
-  {rank:1,prev:2,title:"KAI BREAKS ALL-TIME SUBATHON RECORD",streamer:"KaiCenat",platform:"Twitch",category:"Just Chatting",views:1240000,peak:280000,url:"#"},
-  {rank:2,prev:1,title:"SPEED CRASHES IRL STREAM IN TOKYO",streamer:"IShowSpeed",platform:"YouTube",category:"IRL",views:980000,peak:210000,url:"#"},
-  {rank:3,prev:5,title:"CaseOh destroys entire house on stream",streamer:"CaseOh",platform:"Twitch",category:"Gaming",views:870000,peak:195000,url:"#"},
-  {rank:4,prev:3,title:"xQc rage quits ranked for the 4th time",streamer:"xQc",platform:"Kick",category:"Gaming",views:740000,peak:160000,url:"#"},
-  {rank:5,prev:8,title:"NINJA RETURNS TO TWITCH AFTER 2 YEARS",streamer:"Ninja",platform:"Twitch",category:"Gaming",views:680000,peak:145000,url:"#"},
-  {rank:6,prev:4,title:"Adin Ross meets Drake live on stream",streamer:"AdinRoss",platform:"Kick",category:"Just Chatting",views:620000,peak:138000,url:"#"},
-  {rank:7,prev:null,title:"shroud hits 1M concurrent viewers",streamer:"shroud",platform:"Twitch",category:"Gaming",views:590000,peak:130000,url:"#"},
-  {rank:8,prev:9,title:"Valkyrae emotional breakdown moment",streamer:"Valkyrae",platform:"YouTube",category:"Just Chatting",views:540000,peak:118000,url:"#"},
-  {rank:9,prev:7,title:"pokimane announces final stream",streamer:"pokimane",platform:"Twitch",category:"Just Chatting",views:510000,peak:112000,url:"#"},
-  {rank:10,prev:12,title:"MrBeast surprise joins Kai mid-stream",streamer:"KaiCenat",platform:"Twitch",category:"Just Chatting",views:490000,peak:108000,url:"#"},
-  {rank:11,prev:10,title:"HasanAbi sets political debate viewership record",streamer:"HasanAbi",platform:"Twitch",category:"Just Chatting",views:460000,peak:99000,url:"#"},
-  {rank:12,prev:14,title:"TimTheTatman Battlefield 6 world first",streamer:"timthetatman",platform:"Twitch",category:"Gaming",views:430000,peak:92000,url:"#"},
-  {rank:13,prev:null,title:"Jynxzi hits global rank 1 on Rainbow Six",streamer:"Jynxzi",platform:"Twitch",category:"Gaming",views:410000,peak:90000,url:"#"},
-  {rank:14,prev:15,title:"Destiny vs Sneako debate gets out of hand",streamer:"Destiny",platform:"Kick",category:"Just Chatting",views:390000,peak:85000,url:"#"},
-  {rank:15,prev:11,title:"loltyler1 goes on 3 hour unhinged rant",streamer:"loltyler1",platform:"Twitch",category:"Gaming",views:370000,peak:82000,url:"#"},
-  {rank:16,prev:17,title:"Ibai boxing stream breaks platform record",streamer:"Ibai",platform:"Twitch",category:"IRL",views:355000,peak:78000,url:"#"},
-  {rank:17,prev:18,title:"moistcr1tikal exposes fake charity streamer",streamer:"moistcr1tikal",platform:"Twitch",category:"Just Chatting",views:340000,peak:76000,url:"#"},
-  {rank:18,prev:16,title:"QTCinderella Master Baker chaos moment",streamer:"QTCinderella",platform:"Twitch",category:"IRL",views:325000,peak:71000,url:"#"},
-  {rank:19,prev:null,title:"NickEh30 insane 1v5 clutch in Fortnite",streamer:"NickEh30",platform:"YouTube",category:"Gaming",views:310000,peak:68000,url:"#"},
-  {rank:20,prev:22,title:"Ludwig chess match goes totally off the rails",streamer:"ludwig",platform:"YouTube",category:"Just Chatting",views:298000,peak:65000,url:"#"},
-  {rank:21,prev:20,title:"Ironmouse breaks VTuber concurrent record",streamer:"ironmouse",platform:"Twitch",category:"Just Chatting",views:285000,peak:63000,url:"#"},
-  {rank:22,prev:null,title:"Sykkuno returns from 6 month break",streamer:"Sykkuno",platform:"YouTube",category:"Gaming",views:272000,peak:60000,url:"#"},
-  {rank:23,prev:24,title:"xQc loses big in gambling stream",streamer:"xQc",platform:"Kick",category:"Slots",views:260000,peak:57000,url:"#"},
-  {rank:24,prev:23,title:"NICKMERCS 1v1s pro Warzone player and wins",streamer:"NICKMERCS",platform:"Twitch",category:"Gaming",views:248000,peak:55000,url:"#"},
-  {rank:25,prev:26,title:"Amouranth breaks ASMR concurrent record",streamer:"amouranth",platform:"Twitch",category:"ASMR",views:237000,peak:52000,url:"#"},
-  {rank:26,prev:25,title:"DrDisrespect returns to streaming",streamer:"DrDisrespect",platform:"YouTube",category:"Gaming",views:225000,peak:50000,url:"#"},
-  {rank:27,prev:29,title:"Pokimane reacts to deepfake drama",streamer:"pokimane",platform:"Twitch",category:"Just Chatting",views:214000,peak:48000,url:"#"},
-  {rank:28,prev:null,title:"Lacy hits personal record peak viewers",streamer:"Lacy",platform:"Twitch",category:"Gaming",views:204000,peak:46000,url:"#"},
-  {rank:29,prev:28,title:"ohnePixel goes viral at VCT Masters",streamer:"ohnePixel",platform:"Twitch",category:"Esports",views:195000,peak:44000,url:"#"},
-  {rank:30,prev:31,title:"Emiru responds to drama on stream",streamer:"Emiru",platform:"Twitch",category:"Just Chatting",views:186000,peak:42000,url:"#"},
-];
-
-const STREAMS = [
-  {rank:1,prev:1,title:"KaiCenat 30-day Subathon — Day 18",streamer:"KaiCenat",platform:"Twitch",category:"Just Chatting",views:4200000,peak:485000,url:"#"},
-  {rank:2,prev:3,title:"IShowSpeed World Tour IRL stream",streamer:"IShowSpeed",platform:"YouTube",category:"IRL",views:3800000,peak:420000,url:"#"},
-  {rank:3,prev:2,title:"xQc 18-hour variety marathon",streamer:"xQc",platform:"Kick",category:"Gaming",views:3200000,peak:360000,url:"#"},
-  {rank:4,prev:5,title:"Ibai La Velada del Año 5 boxing event",streamer:"Ibai",platform:"Twitch",category:"IRL",views:2900000,peak:3800000,url:"#"},
-  {rank:5,prev:4,title:"shroud full Valorant ranked grind",streamer:"shroud",platform:"Twitch",category:"Gaming",views:2600000,peak:290000,url:"#"},
-  {rank:6,prev:7,title:"HasanAbi 12-hour political marathon",streamer:"HasanAbi",platform:"Twitch",category:"Just Chatting",views:2400000,peak:265000,url:"#"},
-  {rank:7,prev:null,title:"TimTheTatman Battlefield 6 launch day stream",streamer:"timthetatman",platform:"Twitch",category:"Gaming",views:2200000,peak:240000,url:"#"},
-  {rank:8,prev:9,title:"Ninja comeback 24-hour stream",streamer:"Ninja",platform:"Twitch",category:"Gaming",views:2050000,peak:225000,url:"#"},
-  {rank:9,prev:8,title:"Valkyrae new game reveal reaction stream",streamer:"Valkyrae",platform:"YouTube",category:"Gaming",views:1900000,peak:210000,url:"#"},
-  {rank:10,prev:11,title:"Jynxzi ranked grind to champion",streamer:"Jynxzi",platform:"Twitch",category:"Gaming",views:1750000,peak:195000,url:"#"},
-  {rank:11,prev:10,title:"Adin Ross celebrity collab marathon",streamer:"AdinRoss",platform:"Kick",category:"Just Chatting",views:1600000,peak:180000,url:"#"},
-  {rank:12,prev:13,title:"loltyler1 full season League climb",streamer:"loltyler1",platform:"Twitch",category:"Gaming",views:1500000,peak:168000,url:"#"},
-  {rank:13,prev:null,title:"Ludwig chess boxing event stream",streamer:"ludwig",platform:"YouTube",category:"IRL",views:1400000,peak:156000,url:"#"},
-  {rank:14,prev:14,title:"moistcr1tikal reacts to viral videos for 8 hours",streamer:"moistcr1tikal",platform:"Twitch",category:"Just Chatting",views:1300000,peak:144000,url:"#"},
-  {rank:15,prev:16,title:"Destiny 10-hour political debate marathon",streamer:"Destiny",platform:"Kick",category:"Just Chatting",views:1200000,peak:133000,url:"#"},
-];
-
-let allData = [...CLIPS];
-let filtered = [...CLIPS];
+let allData = [];
+let filtered = [];
 let shown = 20;
-let currentTab = 'clips';
+
+// THIS PART FETCHES THE REAL DATA
+async function loadRealData() {
+    try {
+        const response = await fetch('data.json');
+        const data = await response.json();
+        
+        // Update the date on the hero section
+        document.getElementById('hero-week-date').textContent = data.last_updated;
+        
+        // Set the clips
+        allData = data.clips;
+        filtered = [...allData];
+        render();
+    } catch (e) {
+        console.error("Could not load data.json", e);
+    }
+}
 
 function fmt(n) {
-  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
-  if (n >= 1e3) return Math.round(n / 1e3) + 'K';
-  return String(n);
-}
-
-function getDelta(c) {
-  if (!c.prev) return { txt: 'NEW', cls: 'delta-new' };
-  const d = c.prev - c.rank;
-  if (d > 0) return { txt: '▲' + d, cls: 'delta-up' };
-  if (d < 0) return { txt: '▼' + Math.abs(d), cls: 'delta-dn' };
-  return { txt: '—', cls: 'delta-eq' };
-}
-
-function platClass(p) {
-  return 'plat-' + p.toLowerCase();
+    if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return Math.round(n / 1e3) + 'K';
+    return String(n);
 }
 
 function buildRow(c, maxV, delay) {
-  const delta = getDelta(c);
-  const pct = Math.round((c.views / maxV) * 100);
-  const rankClass = c.rank <= 3 ? ` rank-${c.rank}` : '';
-  return `<a class="clip-row${rankClass}" href="${c.url}" target="_blank" rel="noopener" style="animation-delay:${delay}ms">
-    <div class="rank-cell">
-      <span class="rank-number">${c.rank}</span>
-      <span class="rank-delta ${delta.cls}">${delta.txt}</span>
-    </div>
-    <div class="info-cell">
-      <span class="clip-title">${c.title}</span>
-      <div class="clip-meta">
-        <span class="streamer">${c.streamer}</span>
-        <span class="plat-badge ${platClass(c.platform)}">${c.platform}</span>
-        <span class="cat-badge">${c.category}</span>
-      </div>
-    </div>
-    <div class="views-cell">${fmt(c.views)}</div>
-    <div class="peak-cell">${fmt(c.peak)}</div>
-    <div class="velocity-cell">
-      <div class="vel-bar-bg"><div class="vel-bar-fill" style="width:${pct}%"></div></div>
-      <div class="vel-pct">${pct}%</div>
-    </div>
-  </a>`;
+    const pct = Math.round((c.views / maxV) * 100);
+    const rankClass = c.rank <= 3 ? ` rank-${c.rank}` : '';
+    
+    // This makes the row clickable to the actual video URL
+    return `<a class="clip-row${rankClass}" href="${c.url}" target="_blank" rel="noopener" style="animation-delay:${delay}ms">
+        <div class="rank-cell">
+            <span class="rank-number">${c.rank}</span>
+            <span class="rank-delta delta-new">NEW</span>
+        </div>
+        <div class="info-cell">
+            <span class="clip-title">${c.title}</span>
+            <div class="clip-meta">
+                <span class="streamer">${c.streamer}</span>
+                <span class="plat-badge plat-${c.platform.toLowerCase()}">${c.platform}</span>
+            </div>
+        </div>
+        <div class="views-cell">${fmt(c.views)}</div>
+        <div class="velocity-cell">
+            <div class="vel-bar-bg"><div class="vel-bar-fill" style="width:${pct}%"></div></div>
+            <div class="vel-pct">${pct}%</div>
+        </div>
+    </a>`;
 }
 
 function render() {
-  const wrap = document.getElementById('rows-wrap');
-  const btn = document.getElementById('load-more-btn');
-  const badge = document.getElementById('count-badge');
-
-  if (!filtered.length) {
-    wrap.innerHTML = '<div class="empty-state"><p>No results found</p></div>';
-    btn.style.display = 'none';
-    badge.textContent = '0 entries';
-    return;
-  }
-
-  const maxV = filtered[0].views;
-  const slice = filtered.slice(0, shown);
-  wrap.innerHTML = slice.map((c, i) => buildRow(c, maxV, i * 30)).join('');
-  btn.style.display = shown < filtered.length ? 'flex' : 'none';
-  badge.textContent = filtered.length + ' entries';
+    const wrap = document.getElementById('rows-wrap');
+    if (!filtered.length) return;
+    const maxV = filtered[0].views;
+    wrap.innerHTML = filtered.slice(0, shown).map((c, i) => buildRow(c, maxV, i * 30)).join('');
 }
 
-function applyFilters() {
-  const plat = document.getElementById('sel-platform').value;
-  const q = document.getElementById('search-input').value.toLowerCase().trim();
-  filtered = allData.filter(c => {
-    if (plat !== 'all' && c.platform !== plat) return false;
-    if (q && !c.streamer.toLowerCase().includes(q) && !c.title.toLowerCase().includes(q)) return false;
-    return true;
-  });
-  shown = 20;
-  render();
-}
-
-function showMore() {
-  shown += 20;
-  render();
-}
-
-function switchTab(tab, btn) {
-  currentTab = tab;
-  document.querySelectorAll('.tab-btn, .nav-link').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  document.getElementById('tab-' + tab).classList.add('active');
-
-  allData = tab === 'clips' ? [...CLIPS] : [...STREAMS];
-  filtered = [...allData];
-  shown = 20;
-  document.getElementById('sel-platform').value = 'all';
-  document.getElementById('search-input').value = '';
-  render();
-}
-
-// Set date
-const now = new Date();
-document.getElementById('hero-week-date').textContent =
-  now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-render();
-</script>
+// Start the loading process
+loadRealData();
 </body>
 </html>
