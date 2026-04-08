@@ -1,14 +1,14 @@
 name: Daily Clip Update
 on:
   schedule:
-    - cron: '0 0 * * *' # This runs it every night at midnight UTC
-  workflow_dispatch: # This adds a "Run Now" button for testing
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Allows GitHub to save the new data.json to your repo
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,7 +19,9 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install requests google-api-python-client
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests google-api-python-client
 
       - name: Run Scraper
         run: python CLIP100.py
@@ -27,6 +29,7 @@ jobs:
           TWITCH_ID: ${{ secrets.TWITCH_ID }}
           TWITCH_SECRET: ${{ secrets.TWITCH_SECRET }}
           YT_KEY: ${{ secrets.YT_KEY }}
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Commit and Push changes
         run: |
