@@ -2,10 +2,11 @@ name: Daily Clip Update
 
 on:
   schedule:
-    # Runs every day at 8:00 AM UTC
     - cron: '0 8 * * *'
-  # This lets you also run it manually from the Actions tab
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update-charts:
